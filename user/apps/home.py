@@ -21,7 +21,7 @@ class Messenger:
 	def get_data(self) :
 		while not self.stop_thread:
 			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			sock.connect((user_settings["addres"], user_settings["port"]))
+			sock.connect((preferences["addres"], preferences["port"]))
 			sock.send(json.dumps({"command": "get_messages"}).encode("utf-8"))
 			result = json.loads(sock.recv(1024).decode("utf-8"))
 			sock.close()
@@ -33,18 +33,12 @@ class Messenger:
 			self.text_area.configure(state='disabled')
 			sleep(0.5)
 
-	def send_data(self, message) :
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect((user_settings["addres"], user_settings["port"]))
-		sock.send(message.encode("utf-8"))
-		sock.close()
-
 	def send_message(self):
 		message = self.entry.get()
 		if message:
 			current_time = datetime.now().strftime('%H:%M:%S')
 			data = form_request("send_message", 
-								nickname=user_settings["nickname"], 
+								nickname = preferences["user"]["nickname"], 
 								time_ms = current_time,
 								text_ms = message)
 

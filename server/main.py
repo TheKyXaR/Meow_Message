@@ -45,11 +45,11 @@ def main() :
 		elif data["command"] == "register":
 			data_reg = data["data"]
 
-			is_login = cur.execute("""SELECT login 
-										 FROM users 
-										 WHERE login = ?""", (data_reg['login'],)).fetchall()
+			check_login = cur.execute("""SELECT login 
+									  FROM users 
+									  WHERE login = ?""", (data_reg['login'],)).fetchall()
 
-			if not is_login :
+			if not check_login :
 				cur.execute("""INSERT INTO users (login, passcode, nickname)
 					           VALUES (?, ?, ?)""", 
 					           (data_reg["login"], data_reg["passcode"], data_reg["login"]))
@@ -57,6 +57,25 @@ def main() :
 				user.send(json.dumps({"register": True}).encode("utf-8"))
 			else :
 				user.send(json.dumps({"register": False}).encode("utf-8"))
+
+		elif data["command"] == "login" :
+			data_log = data["data"]
+
+			check_login = cur.execute("""SELECT * 
+										 FROM users 
+										 WHERE login = ?""", (data_log["login"],)).fetchall()
+
+			try:
+				check_login = check_login[0]
+				if check_login[1] == data_log["login"] and check_login[2] == data_log["passcode"] :
+					user.send(json.dumps({"login": check_login}).encode("utf-8"))
+				else :
+					user.send(json.dumps({"login": False}).encode("utf-8"))
+			except IndexError:
+				user.send(json.dumps({"login": False}).encode("utf-8"))
+
+			
+
 
 if __name__ == '__main__':
 	print(f"server start on {ip}:{port}")

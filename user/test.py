@@ -1,8 +1,13 @@
-def test (**data):
-	req = {
-		"command": "",
-		"data": data
-	}
-	print(req)
+pref_2 = {
+	"id": "1",
+	"nick": "2"
+}
 
-test(test= 1, test2 = 2)
+
+for x in pref_2.values() :
+	if x != "" :
+		pass
+	else: 
+		break
+else :
+	print("logins")

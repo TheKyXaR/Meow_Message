@@ -1,5 +1,10 @@
 {
-	"nickname": "KyXaR",
-	"addres": "127.0.0.1",
-	"port": 9090
+    "addres":"127.0.0.1",
+    "port":9090,
+    "user":{
+        "id":"4",
+        "login":"KyXaR",
+        "pass":"Rfhbrfnehf",
+        "nickname":"KyXaR"
+    }
 }

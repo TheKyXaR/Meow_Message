@@ -31,13 +31,10 @@ class RegLogApp:
         password = self.password_var.get()
 
         data = form_request("register", 
-                             login = username,
-                             passcode = password)
+                            login = username,
+                            passcode = password)
 
-        reg = send_data_post(json.dumps(data))["register"]
-        print(reg)
-
-        if reg :
+        if send_data_post(json.dumps(data))["register"] :
             messagebox.showinfo("Реєстрація", f"Користувач {username} зареєстрований успішно!")
         else :
             messagebox.showinfo("Реєстрація", f"Логін {username} вже занятий!")
@@ -47,7 +44,18 @@ class RegLogApp:
         username = self.username_var.get()
         password = self.password_var.get()
 
-        if username == "" or password == "":
-            messagebox.showerror("Помилка", "Будь ласка, введіть ім'я користувача та пароль.")
-        else:
+        data = form_request("login", 
+                            login = username,
+                            passcode = password)
+
+        req = send_data_post(json.dumps(data))["login"]
+
+        if req:
+            preferences["user"] = {"id": str(req[0]), "login": req[1], "pass": req[2], "nickname": req[3]}
+            with open("settings.json", "w", encoding = "utf-8") as file :
+                json.dump(preferences, file, separators = (',', ':') ,indent = 4)
+
             messagebox.showinfo("Авторизація", f"Успішний вхід для користувача {username}.")
+            self.root.destroy()
+        else:
+            messagebox.showerror("ООООО ЙООООЙ", "Логін або пароль. Шото не так кароче :(")
