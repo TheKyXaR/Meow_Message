@@ -74,6 +74,10 @@ def main() :
 			except IndexError:
 				user.send(json.dumps({"login": False}).encode("utf-8"))
 
+		elif data['command'] == 'change_profile_settings' :
+			data_ch_prof_sett = data['data']
+			print(data_ch_prof_sett)
+
 			
 
 

@@ -30,6 +30,10 @@ class RegLogApp:
         username = self.username_var.get()
         password = self.password_var.get()
 
+        if len(username) == 0 or len(password) == 0 :
+            messagebox.showinfo("Реєстрація", f"Ну блять ну хоть одну символ постав")
+            return
+
         data = form_request("register", 
                             login = username,
                             passcode = password)
@@ -39,10 +43,12 @@ class RegLogApp:
         else :
             messagebox.showinfo("Реєстрація", f"Логін {username} вже занятий!")
 
-    def login(self):
+    def login(self, username = False, password = False):
+        global login
+
         # Отримання даних з полів
-        username = self.username_var.get()
-        password = self.password_var.get()
+        username = self.username_var.get() if not username else username
+        password = self.password_var.get() if not password else password
 
         data = form_request("login", 
                             login = username,
@@ -55,7 +61,8 @@ class RegLogApp:
             with open("settings.json", "w", encoding = "utf-8") as file :
                 json.dump(preferences, file, separators = (',', ':') ,indent = 4)
 
-            messagebox.showinfo("Авторизація", f"Успішний вхід для користувача {username}.")
+            login = True
+            # messagebox.showinfo("Логін", f'Добро "{username}" входи але якщо ти просто вгадав пароль то вийди будь ласка!')
             self.root.destroy()
         else:
             messagebox.showerror("ООООО ЙООООЙ", "Логін або пароль. Шото не так кароче :(")

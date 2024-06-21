@@ -2,9 +2,13 @@
     "addres":"127.0.0.1",
     "port":9090,
     "user":{
-        "id":"4",
+        "id":"1",
         "login":"KyXaR",
+<<<<<<< HEAD
+        "pass":"123",
+=======
         "pass":"",
+>>>>>>> bae23a603bdc24d7d86229767076faf20050405d
         "nickname":"KyXaR"
     }
 }

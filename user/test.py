@@ -4,10 +4,8 @@ pref_2 = {
 }
 
 
-for x in pref_2.values() :
-	if x != "" :
-		pass
-	else: 
-		break
-else :
-	print("logins")
+if pref_2['id'] :
+	print("id")
+
+if pref_2['nick'] :
+	print("pass")
