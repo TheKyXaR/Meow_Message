@@ -31,12 +31,27 @@ class Messenger:
 		self.password = tk.StringVar()
 		self.nickname = tk.StringVar()
 
-	def change_profile_settings(self):
-		data = form_request("change_profile_settings", 
+	def change_profile_settings(self, win):
+		data = form_request("change_profile_settings",
+							find_login = preferences['user']['login'], 
 							nickname = self.nickname.get(), 
 							login = self.login.get(),
-							password = self.password.get())
-		send_data(json.dumps(data))
+							passcode = self.password.get())
+		if send_data_post(json.dumps(data)) :
+			user_sett = {
+				"id": preferences['user']['id'],
+				"login": self.login.get() if self.login.get() else preferences['user']['login'],
+				"pass": self.password.get() if self.password.get() else preferences['user']['pass'],
+				"nickname": self.nickname.get() if self.nickname.get() else preferences['user']['nickname'],
+			}
+			preferences['user'] = user_sett
+			with open("settings.json", "w", encoding = "utf-8") as file :
+				json.dump(preferences, file, separators = (',', ':') ,indent = 4)
+
+			messagebox.showinfo("Збереження", "Дані успішно замінені")
+			win.destroy()
+		else :
+			messagebox.showerror("Збереження", "Дані не замінені")
 
 	def open_profile_settings(self):
 		# Створення нового вікна для налаштувань профілю
@@ -51,7 +66,7 @@ class Messenger:
 		tk.Entry(settings_window, textvariable=self.login).pack(pady=1)
 		tk.Label(settings_window, text="Пароль:").pack(pady=5)
 		tk.Entry(settings_window, textvariable=self.password).pack(pady=1)
-		tk.Button(settings_window, text="Зберегти", command=self.change_profile_settings).pack(pady=5)
+		tk.Button(settings_window, text="Зберегти", command=lambda: self.change_profile_settings(settings_window)).pack(pady=5)
 
 	def get_data(self):
 		while not self.stop_thread:

@@ -76,10 +76,20 @@ def main() :
 
 		elif data['command'] == 'change_profile_settings' :
 			data_ch_prof_sett = data['data']
-			print(data_ch_prof_sett)
+			data_ch_prof_sett = {k: v for k, v in data_ch_prof_sett.items() if v}
+			find_login = data_ch_prof_sett.pop("find_login")
+			columns = ", ".join([f"{k} = ?" for k in data_ch_prof_sett.keys()])
+			values = list(data_ch_prof_sett.values())
+			values.append(str(find_login))
 
-			
+			sql = f"UPDATE users SET {columns} WHERE login = ?"
 
+			try:
+				cur.execute(sql, tuple(values))
+				con.commit()
+				user.send(json.dumps({"login": True}).encode("utf-8"))
+			except:
+				user.send(json.dumps({"login": False}).encode("utf-8"))
 
 if __name__ == '__main__':
 	print(f"server start on {ip}:{port}")
