@@ -41,6 +41,7 @@ def main() :
 										LIMIT 27) AS subquery
 								  ORDER BY id ASC""").fetchall()
 			user.send(json.dumps(data).encode("utf-8"))
+			print(data)
 
 		elif data["command"] == "register":
 			data_reg = data["data"]

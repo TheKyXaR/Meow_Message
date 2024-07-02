@@ -2,9 +2,9 @@
     "addres":"127.0.0.1",
     "port":9090,
     "user":{
-        "id":"",
-        "login":"",
-        "pass":"",
-        "nickname":""
+        "id":"3",
+        "login":"Oleg",
+        "pass":"123",
+        "nickname":"KyXaR"
     }
 }

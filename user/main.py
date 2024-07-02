@@ -6,8 +6,8 @@ import threading
 import tkinter as tk
 from time import sleep
 from datetime import datetime
-from tkinter import messagebox
-from tkinter import scrolledtext, Menu
+from tkinter import messagebox, scrolledtext, Menu, ttk, simpledialog
+
 
 with open("settings.json") as file :
 	preferences = json.loads(file.read())
