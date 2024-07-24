@@ -8,7 +8,7 @@ Meow_Message - це Python проект, який реалізує сервер 
 
 Для встановленя виконайте команду
 ```cmd
-	git clone https://github.com/TheKyXaR/Meow_Message.git
+git clone https://github.com/TheKyXaR/Meow_Message.git
 ```
 
 Так як в проєкті не використовувались сторонні бібліотеки встановлювати залежності не потрібно
